@@ -16,6 +16,7 @@ function prepare_PILT_instructions() {
             css_classes: ['instructions'],
             pages: () => {
 
+<<<<<<< HEAD
                 let pages = [
                     ` <p>Welcome!</p>
                     <p>In this study, you'll play a few simple games of learning from trial and error.</p>
@@ -53,6 +54,45 @@ function prepare_PILT_instructions() {
             ]);
             return pages
             },
+=======
+            let pages = [
+                `<p>Welcome!</p>
+                <p>In this study, you'll play a few simple games of learning from trial and error.</p>
+                <p>Your goal in each game is to win as many coins as possible.</p>
+                <p>The games might feel a bit fast-paced because we're interested in your quick, intuitive judgments.</p>
+                <p>Since the games are about learning from trial and error, everyone is expected to make quite a few mistakes when they play. Over time, you can learn how to make better choices and earn more coins.</p>
+                <p>Let's start with the first game.</p>
+                `
+            ];
+
+            pages = pages.concat([
+            `<p><b>THE CARD CHOOSING GAME</b></p>
+                <p>In this game you are the owner of a safe.</p>
+                <img src='imgs/safe.png' style='width:100px; height:100px;'>
+                <p>At the start of the game, your safe contains:</p>
+                <div style='display: grid'><table><tr><td><img src='imgs/1pound.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
+                <td><img src='imgs/50pence.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'</td>
+                <td><img src='imgs/1penny.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td></tr>
+                <tr><td>60x one pound coins</td><td>60x fifty pence coins</td><td>60x one penny coins</td></tr></table></div>
+                <p>At the end of the game, you will draw one coin from your safe, and that will be your bonus payment.</p>
+                <p>Your goal is to add valuable coins to your safe while avoid losing the valuable coins already in it.</p>`,
+            `<p>On each turn of this game, you will see two cards.
+                You have three seconds to flip one of the two cards.</p>
+                <p>This will reveal the coin you collect: either 1 pound, 50 pence, or 1 penny.</p>
+                <div style='display: grid;'><table style='width: 200px; grid-column: 2;'><tr>
+                <td><img src='imgs/1pound.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
+                <td><img src='imgs/50pence.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
+                <td><img src='imgs/1penny.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td></tr></table></div>`,
+            `<p>When you flip a card, you might also see broken coins like these:</p>\
+                <div style='display: grid;'><table style='width: 200px; grid-column: 2;'><tr>
+                <td><img src='imgs/1poundbroken.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
+                <td><img src='imgs/50pencebroken.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
+                <td><img src='imgs/1pennybroken.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td></tr></table></div>
+                <p>This means that such a coin was broken from your safe.</p>`
+        ]);
+        return pages
+    },
+>>>>>>> aa947f3 (improve PILT instructions regarding goal and coins lost and won. Add preamble about spirit of the games)
         show_clickable_nav: true,
         data: {trialphase: "instruction"},
         on_start: () => {updateState("pilt_start_instructions")}
@@ -107,8 +147,14 @@ function prepare_PILT_instructions() {
         type: jsPsychInstructions,
         css_classes: ['instructions'],
         pages: [
+<<<<<<< HEAD
             `${window.sessionNum == 1 ? `<p>You found a <b>£1 coin!</b></p>` : ``}
             <p>Some cards are better than others, but even good cards can sometimes give only a penny or break a £1 coin.</p>`
+=======
+            `${window.sessionNum == 1 ? `<p>You found a one pound coin!</p>` : ``}
+            <p>Some cards are better than others, and through trial and error, you can learn which ones are best.</p> 
+            <p>However, even the best cards may sometimes give only a penny or occasionally break a one-pound coin.</p>`
+>>>>>>> aa947f3 (improve PILT instructions regarding goal and coins lost and won. Add preamble about spirit of the games)
         ],
         show_clickable_nav: true,
         data: {trialphase: "instruction"}
@@ -116,9 +162,16 @@ function prepare_PILT_instructions() {
     {
         type: jsPsychHtmlKeyboardResponse,
         css_classes: ['instructions'],
+<<<<<<< HEAD
         stimulus: `<p>Let's practice collecting coins. 
             On the next screen, choose a card to collect as much money as possible.</p>
             <p>Place your fingers on the left and right arrow keys, then press either one to start.</p>`,
+=======
+        stimulus: `<p>Let's practice collecting coins. \
+            On the next screen, choose cards to collect as much money as you can.</p>
+            <p>One of the picture cards has mostly high value coins behind it, while the other has mostly pennies behind it.</p>
+            <p>Place your fingers on the left and right arrow keys, and press either one to start practicing.</p>`,
+>>>>>>> aa947f3 (improve PILT instructions regarding goal and coins lost and won. Add preamble about spirit of the games)
         choices: ['arrowleft', 'arrowright'],
         data: {trialphase: "instruction"}
     }]);
@@ -171,11 +224,18 @@ function prepare_PILT_instructions() {
         {
             type: jsPsychHtmlKeyboardResponse,
             css_classes: ['instructions'],
+<<<<<<< HEAD
             stimulus: `<p>Now, let's practice <b>avoiding losing coins</b>!</p>
             <p>On the next screen, choose a card to lose as little money as possible.</p>
             <p>Place your fingers on the left and right arrow keys, then press either one to start.</p>`,
+=======
+            stimulus: `<p>Now, let's practice minimizing your coin losses. 
+            On the next screen, choose cards to lose as little money as possible.</p>
+            <p>One of the picture cards will often break the high-value coins in your safe, while the other will mostly break only your pennies.</p>
+            <p>Place your fingers on the left and right arrow keys, and press either one to start practicing.</p>`,
+>>>>>>> aa947f3 (improve PILT instructions regarding goal and coins lost and won. Add preamble about spirit of the games)
             choices: ['arrowright', 'arrowleft'],
-            data: {trialphase: "instruction"}
+            data: {trialphase: "instruction"} 
         }
     ]);
 
