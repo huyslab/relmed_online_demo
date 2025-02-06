@@ -292,8 +292,8 @@ const pavlovian_images_f = () => {
         0.01: "PIT3.png",
         1.0: "PIT1.png",
         0.5: "PIT2.png",
-        "-0.01": "PIT6.png",
-        "-1": "PIT4.png",
+        "-0.01": "PIT4.png",
+        "-1": "PIT6.png",
         "-0.5": "PIT5.png"
     };
     PIT_imgs = Object.fromEntries(Object.entries(PIT_imgs).map(([k, v]) => [k, "Pav_stims/session" + sessionNum + "/" + v]));
@@ -424,7 +424,8 @@ const coin_lottery = {
 }
 
 // Build PILT task block
-function build_PILT_task(structure, insert_msg = true) {
+function build_PILT_task(structure, insert_msg = true, task_name = "pilt") {
+    console.log(task_name)
     let PILT_task = [];
     for (let i = 0; i < structure.length; i++) {
 
@@ -439,6 +440,15 @@ function build_PILT_task(structure, insert_msg = true) {
         let preload_images = structure[i].flatMap(item => [item.stimulus_right, item.stimulus_left]);
         preload_images = [...new Set(preload_images)].map(value => `imgs/PILT_stims/${value}`);
 
+        // Get valence for the block
+        const valence = structure[i][0]["valence"];
+
+        // Get n_stimuli for this block
+        const n_stimuli = structure[i][0]["n_stimuli"];
+
+        // Get block number
+        const block_number = structure[i][0]["block"];
+
         // Build block
         block = [
             {
@@ -446,15 +456,43 @@ function build_PILT_task(structure, insert_msg = true) {
                 images: preload_images,
                 post_trial_gap: 800,
                 continue_after_error: true
-            },
+            }
+        ];
+
+        if (isValidNumber(block_number)){
+            block.push(
+                {
+                    type: jsPsychHtmlKeyboardResponse,
+                    stimulus: `
+                        <p>On the next round you will play to <b>${valence > 0 ? "win" : "avoid losing"} coins</b>.<p>` + 
+                       ( n_stimuli === 2 ? `<p>Place your fingers on the left and right arrow keys, and press either one to continue.</p>` :
+                        `<p>Place your fingers on the left, right, and up arrow keys, and press either one to continue.</p>`),
+                    choices: n_stimuli === 2 ? ['arrowright', 'arrowleft'] : ['arrowright', 'arrowleft', 'arrowup'],
+                    css_classes: ['instructions'],
+                    data: {
+                        trialphase: "pre_block",
+                    },
+                }
+            )
+        }
+            
+        block.push(
             {
                 timeline: [
                     PILT_trial
                 ],
-                timeline_variables: structure[i]
-            }
-        ];
+                timeline_variables: structure[i],
+                on_start: () => {
 
+                    const block = jsPsych.evaluateTimelineVariable('block');
+
+                    if ((jsPsych.evaluateTimelineVariable('trial') == 1) && (typeof block === "number")){
+                        updateState(`${task_name}_start_block_${block}`)
+                    }
+                }
+            }
+        );
+        
         // Add message
         if (insert_msg) {
             block.push(inter_block_msg);
@@ -476,7 +514,11 @@ async function load_squences(session) {
             throw new Error('Network response was not ok');
         }
         const structure = await response.json();
-        const sess_structure = structure[session - 1].slice(0,3);
+        let sess_structure = structure[session - 1];
+
+        if (window.demo){
+            sess_structure = sess_structure.slice(0,6);
+        }
 
         window.totalBlockNumber = sess_structure.length
 
@@ -489,7 +531,11 @@ async function load_squences(session) {
 
         const test_structure = await test_response.json();
 
-        let test_sess_structure = [test_structure[session - 1][0].slice(0,5)];
+        let test_sess_structure = test_structure[session - 1];
+
+        if (window.demo){
+            test_sess_structure = [test_sess_structure[0].slice(0,25)];
+        }
 
         // Add folder to stimuli, and rename block
         for (i=0; i<test_sess_structure.length; i++){
@@ -511,12 +557,18 @@ async function load_squences(session) {
         }
 
         // Add Pavlovaian test to the end of test strucutre
-        // test_sess_structure = [pav_test_structure].concat(test_sess_structure);
+        if (!window.demo){
+            test_sess_structure = [pav_test_structure].concat(test_sess_structure);
+        }
 
         // Fetch WM structure
         const WM_response = await fetch('pilot6_WM.json');
         const WM_structure = await WM_response.json();
-        const WM_sess_structure = WM_structure[session - 1];
+        let WM_sess_structure = WM_structure[session - 1];
+
+        if (window.demo){
+            WM_sess_structure = WM_sess_structure.slice(0,3);
+        }
 
         run_full_experiment(sess_structure, test_sess_structure, WM_sess_structure);
     } catch (error) {
@@ -535,17 +587,27 @@ function return_PILT_full_sequence(structure, test_structure, WM_structure) {
     PILT_procedure = PILT_procedure.concat(prepare_PILT_instructions());
 
     // Add PILT
-    PILT_procedure = PILT_procedure.concat(build_PILT_task(structure));
+    let PILT_blocks = build_PILT_task(structure);
+    PILT_blocks[0]["on_start"] = () => {updateState("pilt_task_start")};
+    PILT_procedure = PILT_procedure.concat(PILT_blocks);
 
     // Add test
     let PILT_test_procedure = [];
     PILT_test_procedure.push(test_instructions);
-    PILT_test_procedure = PILT_test_procedure.concat(build_post_PILT_test(test_structure));
+    let test_blocks = build_post_PILT_test(test_structure);
+    test_blocks[0]["on_start"] = () => {
+        updateState("post_test_task_start");
+        updateState("no_resume");
+    };
+    PILT_test_procedure = PILT_test_procedure.concat(test_blocks);
 
     // WM block
-    let WM_procedure = WM_instructions;
-
-    WM_procedure = WM_procedure.concat(build_PILT_task(WM_structure));
+    let WM_blocks = build_PILT_task(WM_structure, true, "wm");
+    WM_blocks[0]["on_start"] = () => {
+        updateState("wm_task_start");
+        updateState("no_resume_10_minutes");
+    };
+    const WM_procedure = WM_instructions.concat(WM_blocks);
 
 
     return {

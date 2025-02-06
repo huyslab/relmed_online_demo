@@ -7,8 +7,11 @@ const PITconfig = {
   trialDuration: 7000 // in milliseconds on average, U[9500, 10500]
 };
 
-var PITtrialList = [{ "magnitude": 5, "ratio": 8, "coin": 0, "trialDuration": 4110 }, { "magnitude": 5, "ratio": 8, "coin": -0.01, "trialDuration": 6666 }, { "magnitude": 5, "ratio": 8, "coin": 0.01, "trialDuration": 7261 }, { "magnitude": 2, "ratio": 8, "coin": 0, "trialDuration": 4188 }, { "magnitude": 2, "ratio": 8, "coin": -1, "trialDuration": 7490 }, { "magnitude": 2, "ratio": 8, "coin": 1, "trialDuration": 6825 }, { "magnitude": 1, "ratio": 1, "coin": 0, "trialDuration": 4130 }, { "magnitude": 1, "ratio": 1, "coin": 0.01, "trialDuration": 6891 }, { "magnitude": 1, "ratio": 1, "coin": -0.01, "trialDuration": 6902 }, { "magnitude": 2, "ratio": 8, "coin": 0, "trialDuration": 4193 }, { "magnitude": 2, "ratio": 8, "coin": -0.5, "trialDuration": 6535 }, { "magnitude": 2, "ratio": 8, "coin": -0.01, "trialDuration": 6652 }, { "magnitude": 1, "ratio": 1, "coin": 0, "trialDuration": 3978 }, { "magnitude": 1, "ratio": 1, "coin": -0.5, "trialDuration": 6888 }, { "magnitude": 1, "ratio": 1, "coin": -1, "trialDuration": 6962 }, { "magnitude": 2, "ratio": 16, "coin": 0, "trialDuration": 3833 }, { "magnitude": 2, "ratio": 16, "coin": 0.5, "trialDuration": 7452 }, { "magnitude": 2, "ratio": 16, "coin": 0.01, "trialDuration": 6954 }, { "magnitude": 5, "ratio": 8, "coin": 0, "trialDuration": 3913 }, { "magnitude": 5, "ratio": 8, "coin": -0.5, "trialDuration": 6956 }, { "magnitude": 5, "ratio": 8, "coin": 0.5, "trialDuration": 7376 }, { "magnitude": 2, "ratio": 8, "coin": 0, "trialDuration": 4005 }, { "magnitude": 2, "ratio": 8, "coin": 0.5, "trialDuration": 7009 }, { "magnitude": 2, "ratio": 8, "coin": 0.01, "trialDuration": 7228 }, { "magnitude": 5, "ratio": 8, "coin": 0, "trialDuration": 4114 }, { "magnitude": 5, "ratio": 8, "coin": -1, "trialDuration": 7386 }, { "magnitude": 5, "ratio": 8, "coin": 1, "trialDuration": 7221 }, { "magnitude": 2, "ratio": 16, "coin": 0, "trialDuration": 4245 }, { "magnitude": 2, "ratio": 16, "coin": 1, "trialDuration": 6679 }, { "magnitude": 2, "ratio": 16, "coin": -0.01, "trialDuration": 7207 }, { "magnitude": 1, "ratio": 1, "coin": 0, "trialDuration": 3767 }, { "magnitude": 1, "ratio": 1, "coin": 1, "trialDuration": 7236 }, { "magnitude": 1, "ratio": 1, "coin": 0.5, "trialDuration": 6501 }, { "magnitude": 2, "ratio": 16, "coin": 0, "trialDuration": 3826 }, { "magnitude": 2, "ratio": 16, "coin": -0.5, "trialDuration": 7465 }, { "magnitude": 2, "ratio": 16, "coin": -1, "trialDuration": 6827 }].slice(0,4);
+var PITtrialList = [{ "magnitude": 5, "ratio": 8, "coin": 0, "trialDuration": 4110 }, { "magnitude": 5, "ratio": 8, "coin": -0.01, "trialDuration": 6666 }, { "magnitude": 5, "ratio": 8, "coin": 0.01, "trialDuration": 7261 }, { "magnitude": 2, "ratio": 8, "coin": 0, "trialDuration": 4188 }, { "magnitude": 2, "ratio": 8, "coin": -1, "trialDuration": 7490 }, { "magnitude": 2, "ratio": 8, "coin": 1, "trialDuration": 6825 }, { "magnitude": 1, "ratio": 1, "coin": 0, "trialDuration": 4130 }, { "magnitude": 1, "ratio": 1, "coin": 0.01, "trialDuration": 6891 }, { "magnitude": 1, "ratio": 1, "coin": -0.01, "trialDuration": 6902 }, { "magnitude": 2, "ratio": 8, "coin": 0, "trialDuration": 4193 }, { "magnitude": 2, "ratio": 8, "coin": -0.5, "trialDuration": 6535 }, { "magnitude": 2, "ratio": 8, "coin": -0.01, "trialDuration": 6652 }, { "magnitude": 1, "ratio": 1, "coin": 0, "trialDuration": 3978 }, { "magnitude": 1, "ratio": 1, "coin": -0.5, "trialDuration": 6888 }, { "magnitude": 1, "ratio": 1, "coin": -1, "trialDuration": 6962 }, { "magnitude": 2, "ratio": 16, "coin": 0, "trialDuration": 3833 }, { "magnitude": 2, "ratio": 16, "coin": 0.5, "trialDuration": 7452 }, { "magnitude": 2, "ratio": 16, "coin": 0.01, "trialDuration": 6954 }, { "magnitude": 5, "ratio": 8, "coin": 0, "trialDuration": 3913 }, { "magnitude": 5, "ratio": 8, "coin": -0.5, "trialDuration": 6956 }, { "magnitude": 5, "ratio": 8, "coin": 0.5, "trialDuration": 7376 }, { "magnitude": 2, "ratio": 8, "coin": 0, "trialDuration": 4005 }, { "magnitude": 2, "ratio": 8, "coin": 0.5, "trialDuration": 7009 }, { "magnitude": 2, "ratio": 8, "coin": 0.01, "trialDuration": 7228 }, { "magnitude": 5, "ratio": 8, "coin": 0, "trialDuration": 4114 }, { "magnitude": 5, "ratio": 8, "coin": -1, "trialDuration": 7386 }, { "magnitude": 5, "ratio": 8, "coin": 1, "trialDuration": 7221 }, { "magnitude": 2, "ratio": 16, "coin": 0, "trialDuration": 4245 }, { "magnitude": 2, "ratio": 16, "coin": 1, "trialDuration": 6679 }, { "magnitude": 2, "ratio": 16, "coin": -0.01, "trialDuration": 7207 }, { "magnitude": 1, "ratio": 1, "coin": 0, "trialDuration": 3767 }, { "magnitude": 1, "ratio": 1, "coin": 1, "trialDuration": 7236 }, { "magnitude": 1, "ratio": 1, "coin": 0.5, "trialDuration": 6501 }, { "magnitude": 2, "ratio": 16, "coin": 0, "trialDuration": 3826 }, { "magnitude": 2, "ratio": 16, "coin": -0.5, "trialDuration": 7465 }, { "magnitude": 2, "ratio": 16, "coin": -1, "trialDuration": 6827 }];
 
+if (window.demo){
+  PITtrialList = PITtrialList.slice(0,10);
+}
 // var PITtrialList = jsPsych.randomization.shuffleNoRepeats(PITtrialList, function(trial1, trial2) {trial1.coin == trial2.coin && trial1.ratio == trial2.ratio && trial1.magnitude == trial2.magnitude});
 
 // Trial stimulus function
@@ -22,8 +25,8 @@ function generatePITstimulus(coin, ratio) {
     0.01: "PIT3.png",
     1.0: "PIT1.png",
     0.5: "PIT2.png",
-    "-0.01": "PIT6.png",
-    "-1": "PIT4.png",
+    "-0.01": "PIT4.png",
+    "-1": "PIT6.png",
     "-0.5": "PIT5.png"
   };
   PIT_imgs = Object.fromEntries(Object.entries(PIT_imgs).map(([k, v]) => [k, "imgs/Pav_stims/session" + sessionNum + "/" + v]));
@@ -72,7 +75,7 @@ const PITtrial = {
     total_reward: () => { return window.totalReward }
   },
   on_start: function (trial) {
-    if (window.prolificPID.includes("simulate")) {
+    if (window.relmedPID.includes("simulate")) {
       trial.trial_duration = 1000;
     }
     // Create a shared state object
@@ -158,6 +161,8 @@ PITtrialList.forEach(trial => {
     timeline_variables: [trial]
   });
 });
+
+PITtrials[0]["on_timeline_start"] = () => {updateState(`pit_start_task`)};
 
 function getSelectedPITtrial() {
   const raw_data = jsPsych.data.get().filterCustom((trial) => trial.trialphase == "pit_trial");
@@ -275,8 +280,8 @@ const PITruleInstruction_2 = {
     </div>`,
     `
     <div id="instruction-text" style="text-align: left">
-      <p><strong>In this cloudy place, the background will also change occasionally.</strong></p>
-      <p>You may recognize some patterns in the background from the previous <strong>Card Choosing Game</strong>&#8212;try to remember what you learned there.</p>
+      <p><span class="highlight">In this cloudy place, the background will also change occasionally.</span></p>
+      <p>These are the backgrounds you will see. Each background will either add or remove <strong>one</strong> coin from your earnings, regardless of what you do.</p>
 
           <div class="pav-stimuli-container">
                 <div class="pit-pav-row">
@@ -291,14 +296,15 @@ const PITruleInstruction_2 = {
     </div>
     `, `
     <div id="instruction-text" style="text-align: left">
-          <p><span class="highlight">Each time you see one of the backgrounds shown below, a coin will be added or removed in addition to your bonus for that round.</span></p>
-          <p>If a round is selected at the end of the game, the adjusted bonus from that round will be paid.</p>
+          <p><strong>Here's how each background affects your earnings:</strong></p>
+          <p>The backgrounds on the left will <strong>add</strong> £1, 50p, or 1p, while the backgrounds on the right will <strong>remove</strong> 1p, 50p, or £1, regardless of what you do.</p>
 
           <div class="pav-stimuli-container">
                 <div class="pit-pav-row">
                       <img src=${"imgs/Pav_stims/session" + sessionNum + "/PIT1.png"} class="pit-pav-icon">
                       <img src=${"imgs/Pav_stims/session" + sessionNum + "/PIT2.png"} class="pit-pav-icon">
                       <img src=${"imgs/Pav_stims/session" + sessionNum + "/PIT3.png"} class="pit-pav-icon">
+                      <div class="vertical"></div>
                       <img src=${"imgs/Pav_stims/session" + sessionNum + "/PIT4.png"} class="pit-pav-icon">
                       <img src=${"imgs/Pav_stims/session" + sessionNum + "/PIT5.png"} class="pit-pav-icon">
                       <img src=${"imgs/Pav_stims/session" + sessionNum + "/PIT6.png"} class="pit-pav-icon">
@@ -307,9 +313,10 @@ const PITruleInstruction_2 = {
                       <img src="imgs/1pound.png" class="pit-coin-icon">
                       <img src="imgs/50pence.png" class="pit-coin-icon">
                       <img src="imgs/1penny.png" class="pit-coin-icon">
-                      <img src="imgs/1poundbroken.png" class="pit-coin-icon">
-                      <img src="imgs/50pencebroken.png" class="pit-coin-icon">
+                      <div class="vertical"></div>
                       <img src="imgs/1pennybroken.png" class="pit-coin-icon">
+                      <img src="imgs/50pencebroken.png" class="pit-coin-icon">
+                      <img src="imgs/1poundbroken.png" class="pit-coin-icon">
                 </div>
           </div>
     </div>
@@ -324,6 +331,7 @@ const startPITconfirmation = {
   choices: ['b', 'r'],
   stimulus: `
   <div id="instruction-text">
+      <p>You will now play the piggy-bank game in the clouds for about eight minutes.</p>
       <p>When you're ready, press <span class="spacebar-icon">B</span> to start!</p>
       <p>If you want to read the rules again, press <span class="spacebar-icon">R</span>.</p>
   </div>
@@ -344,5 +352,8 @@ const PITinstructions = {
     } else {
       return false;
     }
+  },
+  on_timeline_start: () => {
+    updateState(`pit_start_instructions`)
   }
 }

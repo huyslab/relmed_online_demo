@@ -74,78 +74,59 @@ function check_fullscreen(){
         return false
     }
 }
-  
+
+// Post messages to Azure server
+function postToParent(message, fallback = () => {}) {
+    try {
+        if (window.parent && window.parent.postMessage) {
+            window.parent.postMessage(message, '*');
+        } else {
+            throw new Error("Parent window or postMessage is unavailable.");
+        }
+    } catch (error) {
+        console.error("Failed to send message to parent window:", error);
+    
+        // Implement a fallback or handle the error
+        fallback();
+    }
+}
+
+function updateState(state) {
+    console.log(state);
+    postToParent({
+        state: state
+    });
+}
 
 // Save data to REDCap
-function saveDataREDCap(retry = 1, callback = () => {}) {
-
-    const auto_number = window.record_id == undefined
-
-    console.log(auto_number)
+function saveDataREDCap(retry = 1, extra_fields = {}, callback = () => {}) {
 
     var jspsych_data = jsPsych.data.get().ignore('stimulus').json();
 
-    var redcap_record = JSON.stringify([{
-        record_id: auto_number ? 1 : window.record_id, // Mandatory, but if auto_number then ignored by REDcap
-        prolific_pid: window.prolificPID,
-        study_id: window.studyId,
-        session_id: window.sessionId,
-        start_time: jsPsych.getStartTime(),
-        jspsych_data: jspsych_data,
-        auto_number: auto_number ? 'true' : 'false'
-    }])
-
-    fetch('https://h6pgstm0f9.execute-api.eu-north-1.amazonaws.com/prod/submit', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: redcap_record
-    })
-    .then(data => {
-        if (data.status === 200) {
-            console.log('Data successfully submitted to REDCap');
-        } else {
-            console.error('Error submitting data:', data.message);
-        }
-        return data.json()
-    })
-    .then(data => {
-        console.log(data)
-        if (auto_number){
-            window.record_id = JSON.parse('[' + data.record_import_response[0] + ']')[0]
-        }
-        callback(); // Call the callback function if submission is successful
-    }
-    )
-    .catch(error => {
-        console.error('Error:', error);
-        if (retry > 0) {
-            console.log('Retrying to submit data...');
-            setTimeout(function(){
+    postToParent(
+        {
+            ...{ 
+                data: jspsych_data 
+            },
+            ...extra_fields
+    },
+        () => {
+            setTimeout(function () {
                 saveDataREDCap(retry - 1);
             }, 1000);
-        } else {
-            console.error('Failed to submit data after retrying.');
-            callback(error); // Call the callback function with the error if retries are exhausted
         }
-    });
+    );
+
+    callback();
 }
 
 // Function to call at the end of the experiment
 function end_experiment() {
 
-    saveDataREDCap(10, (error) => {
-        if (error) {
-            console.error('Failed to save data:', error);
-            // Handle the error appropriately, maybe notify the user or retry
-        } else {
-            // Allow refresh
-            window.removeEventListener('beforeunload', preventRefresh);
+    window.removeEventListener('beforeunload', preventRefresh);
 
-            // Redirect
-            document.body.innerHTML += "<p>You may now close this window.</p>";
-        }
+    saveDataREDCap(10, { 
+        message: "endTask"
     });
 }
 
